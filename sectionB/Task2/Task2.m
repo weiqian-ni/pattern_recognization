@@ -27,7 +27,7 @@ ylabel("eigenvalues");
 
 %task b
 %standardize the data
-standardized_electrode_data = standard(total_electrode_data);
+standardized_electrode_data = standardize(total_electrode_data);
 V_1 = V(:,19);
 V_2 = V(:,18);
 V_3 = V(:,17);
