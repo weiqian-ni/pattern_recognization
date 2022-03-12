@@ -1,6 +1,7 @@
 clear;
 clc;
 close all;
+%part a
 %load the data
 load('F0_PVT.mat');
 
@@ -62,3 +63,25 @@ Sb = ([black_foam_temperature_mean;black_foam_vibration_mean] - [car_sponge_temp
 [V,D,U] = eig(Sw\Sb);
 V_1 = V(:,1);
 plot([-V_1(1),V_1(1)]*2.5,[V_1(2),-V_1(2)]*2.5);
+
+%part b
+figure;
+scatter3(black_foam_pressure,black_foam_vibration,black_foam_temperature,'filled','black');
+hold on;
+scatter3(car_sponge_pressure,car_sponge_vibration,car_sponge_temperature,'filled','yellow');
+xlabel('pressure');
+ylabel('vibration');
+zlabel('temperature');
+Sw = ([black_foam_pressure;black_foam_vibration;black_foam_temperature] - [black_foam_pressure_mean;black_foam_vibration_mean;black_foam_temperature_mean]) * ([black_foam_pressure;black_foam_vibration;black_foam_temperature] - [black_foam_pressure_mean;black_foam_vibration_mean;black_foam_temperature_mean])' + ([car_sponge_pressure;car_sponge_vibration;car_sponge_temperature] - [car_sponge_pressure_mean;car_sponge_vibration_mean;car_sponge_temperature_mean]) * ([car_sponge_pressure;car_sponge_vibration;car_sponge_temperature] - [car_sponge_pressure_mean;car_sponge_vibration_mean;car_sponge_temperature_mean])';
+Sb = ([black_foam_pressure_mean;black_foam_vibration_mean;black_foam_temperature_mean] - [car_sponge_pressure_mean;car_sponge_vibration_mean;car_sponge_temperature_mean]) * ([black_foam_pressure_mean;black_foam_vibration_mean;black_foam_temperature_mean] - [car_sponge_pressure_mean;car_sponge_vibration_mean;car_sponge_temperature_mean])';
+[V,D,U] = eig(Sw\Sb);
+Z = zeros(1,3);
+V_1 = V(:,1)';
+V_2 = V(:,2)';
+V_3 = V(:,3)';
+pts1 = [Z; V_1*2];
+pts2 = [Z; V_2*2];
+pts3 = [Z; V_3*2];
+plot3(pts1(:,1), pts1(:,2), pts1(:,3))
+plot3(pts2(:,1), pts2(:,2), pts2(:,3))
+plot3(pts3(:,1), pts3(:,2), pts3(:,3))
